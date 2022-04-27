@@ -2,6 +2,7 @@ package com.flyconcept.datacountries.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.flyconcept.datacountries.di.DaggerApiComponent
 import com.flyconcept.datacountries.model.Country
 import com.flyconcept.datacountries.model.network.CountriesService
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -9,9 +10,14 @@ import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
 class ListViewModel:ViewModel() {
-    private val countriesService = CountriesService()
+    @Inject
+    lateinit var countriesService:CountriesService
+    init {
+        DaggerApiComponent.create().inject(this)
+    }
     private val disposable = CompositeDisposable()
 
     val countries = MutableLiveData<List<Country>>()
