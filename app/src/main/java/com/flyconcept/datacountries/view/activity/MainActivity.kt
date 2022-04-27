@@ -6,6 +6,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.flyconcept.datacountries.R
 import com.flyconcept.datacountries.databinding.ActivityMainBinding
 import com.flyconcept.datacountries.view.adapter.CountryListAdapter
@@ -24,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding!!.countryList.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = countriesAdapter
+        }
+        activityMainBinding!!.swipeRefreshLayout.setOnRefreshListener {
+            activityMainBinding!!.swipeRefreshLayout.isRefreshing = false
+            viewModel.refresh()
         }
         observeViewModel()
 
@@ -56,7 +61,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
 
 }
